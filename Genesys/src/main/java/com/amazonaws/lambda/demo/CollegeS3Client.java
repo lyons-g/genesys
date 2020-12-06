@@ -52,6 +52,7 @@ public class CollegeS3Client {
 		return new ArrayList<College>(Arrays.asList(getAll()));
 	}
 	
+	
 	protected boolean updateAllCollege(College college) {
 		
 		Gson gson = new Gson();
