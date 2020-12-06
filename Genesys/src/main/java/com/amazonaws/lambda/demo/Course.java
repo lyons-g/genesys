@@ -2,25 +2,36 @@ package com.amazonaws.lambda.demo;
 
 import java.util.ArrayList;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.google.gson.annotations.SerializedName;
+
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "cid", scope = Course.class)
+
 public class Course {
+	
 	
 	int cid;
 	String title;
 	Professor professor;
-	ArrayList<Student> enrollment;
+	ArrayList<Student> students;
 
 	public Course() {
 		
 	}
 	
-	public Course(int cid, String title, Professor professor, ArrayList<Student> enrollment) {
+	public Course(int cid, String title, Professor professor, ArrayList<Student> students) {
 		super();
 		this.cid = cid;
 		this.title = title;
 		this.professor = professor;
-		this.enrollment = enrollment;
+		this.students = students;
 	}
 
+	@DynamoDBHashKey
 	public int getCid() {
 		return cid;
 	}
@@ -37,6 +48,7 @@ public class Course {
 		this.title = title;
 	}
 
+	 
 	public Professor getProfessor() {
 		return professor;
 	}
@@ -45,17 +57,18 @@ public class Course {
 		this.professor = professor;
 	}
 
-	public ArrayList<Student> getEnrollment() {
-		return enrollment;
+
+	public ArrayList<Student> getStudents() {
+		return students;
 	}
 
-	public void setEnrollment(ArrayList<Student> enrollment) {
-		this.enrollment = enrollment;
+	public void setStudents(ArrayList<Student> students) {
+		this.students = students;
 	}
 
 	@Override
 	public String toString() {
-		return "Course [cid=" + cid + ", title=" + title + ", professor=" + professor + ", enrollment=" + enrollment
+		return "Course [cid=" + cid + ", title=" + title + ", professor=" + professor + ", students=" + students
 				+ "]";
 	}
 	

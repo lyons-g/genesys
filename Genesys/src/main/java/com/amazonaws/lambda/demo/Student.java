@@ -1,7 +1,12 @@
 package com.amazonaws.lambda.demo;
 
-public class Student {
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.google.gson.annotations.SerializedName;
 
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "sid", scope = Student.class)
+public class Student {
+	 
 	int sid;
 	String name;
 	

@@ -2,14 +2,20 @@ package com.amazonaws.lambda.demo;
 
 import java.util.ArrayList;
 
-public class CollegeContainer {
-
+public class College {
+	
+	
+	ArrayList<Course> courses = new ArrayList<Course>();
 	ArrayList<Student> students = new ArrayList<Student>();
 	ArrayList<Professor> professors = new ArrayList<Professor>();
-	ArrayList<Course> courses = new ArrayList<Course>();
 	
+
+	public College() {
+		
+	}
 	
 	public ArrayList<Student> getStudents() {
+
 		return students;
 	}
 	
@@ -30,9 +36,9 @@ public class CollegeContainer {
 	}
 	@Override
 	public String toString() {
-		return "CollegeContainer [students=" + getStudents() + ", professors=" + professors + ", courses=" + courses + "]";
+		return "CollegeContainer [students=" + getStudents() + ", professors=" + getProfessors() + ", courses=" + getCourses() + "]";
 	}
-
 	
 	
 }
+
