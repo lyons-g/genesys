@@ -16,40 +16,50 @@ import java.io.File;
 import java.io.InputStreamReader;
 
 import com.google.gson.Gson;
+
+import java.util.ArrayList;
 import java.util.List;
 
-public class RegistrationFindFunction implements RequestHandler<Object, String> {
+public class RegistrationFindFunction 
+extends CollegeS3Client
+implements RequestHandler<HttpQueryStringRequest, httpCourseResponse>  {
 
     @Override
-    public String handleRequest(Object input, Context context) {
-        context.getLogger().log("Input: " + input);
+    public httpCourseResponse handleRequest(HttpQueryStringRequest request, Context context) {
+        context.getLogger().log("Input: " + request);
 
+        /*
+         * look up id of query parameter and get its value
+         * return numbers in string format
+         */
+        String idAsString = (String)request.getQueryStringParameters().get("id");
+        if(idAsString.equalsIgnoreCase("all")) {
+        	
+        	ArrayList<Course> allCourses = getAll().getCourses();
+        	httpCourseResponse response = new httpCourseResponse(allCourses);
+        	return response;
+	
+        	}
+        	
         
-        Region region = Region.EU_WEST_1;
-        S3Client s3Client = S3Client.builder().region(region).build();
-        ResponseInputStream<?> objectData = s3Client.getObject(GetObjectRequest.builder()
-        		.bucket("academic-registration")
-				.key("registration-data.json")
-				.build());
-   
+        Integer courseId = Integer.parseInt(idAsString);
+        Course course = getCourseById(courseId);
         
-        College college = new College();
-        ObjectMapper mapper = new ObjectMapper();
-        
-		try { college = mapper.readValue(objectData, College.class);
-
-		}
-		catch(JsonParseException e) {
-			e.printStackTrace();
-		}catch(JsonMappingException e) {
-			e.printStackTrace();
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		
-		return college.toString();
+        return new httpCourseResponse(course);
         
     }
+
+	private Course getCourseById(int courId) {
+
+		College college = getAll();
+		
+		for(Course cour: college.courses) {
+			if(cour.getCid()==courId) {
+				return cour;
+			}
+		}
+		return null;
+	}
     
 }
 

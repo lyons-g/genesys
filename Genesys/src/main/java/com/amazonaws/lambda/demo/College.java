@@ -36,7 +36,7 @@ public class College {
 	}
 	@Override
 	public String toString() {
-		return "CollegeContainer [students=" + getStudents() + ", professors=" + getProfessors() + ", courses=" + getCourses() + "]";
+		return "College [students=" + getStudents() + ", professors=" + getProfessors() + ", courses=" + getCourses() + "]";
 	}
 	
 	
