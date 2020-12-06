@@ -7,12 +7,17 @@ import com.google.gson.annotations.SerializedName;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "pid", scope = Professor.class)
 public class Professor {
 	
-	@SerializedName("pid")
+	
 	int pid;
 	String name;
 	
 	public Professor() {
-}
+	}
+	
+	public Professor(int pid) {
+		this.pid=pid;
+		this.name = getName();
+	}
 	
 	public Professor(int pid, String name) {
 		super();

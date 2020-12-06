@@ -6,6 +6,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.google.gson.annotations.SerializedName;
 
@@ -31,7 +32,19 @@ public class Course {
 		this.students = students;
 	}
 
-	@DynamoDBHashKey
+	
+	public Course(CourseJson courseToAdd) {
+		this.cid = courseToAdd.getCid();
+		this.title = courseToAdd.getTitle();
+		this.professor = new Professor(courseToAdd.getPid());
+		
+		ArrayList<Student> students = new ArrayList<Student>();
+		for(int sid : courseToAdd.getSids()) {
+			students.add(new Student(sid));
+		}
+		this.students = students;
+	}
+
 	public int getCid() {
 		return cid;
 	}
@@ -47,16 +60,19 @@ public class Course {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-
 	 
 	public Professor getProfessor() {
 		return professor;
 	}
+	
 
 	public void setProfessor(Professor professor) {
 		this.professor = professor;
 	}
 
+	public void setProfessor(int pid) {
+		this.professor = new Professor(pid);
+	}
 
 	public ArrayList<Student> getStudents() {
 		return students;

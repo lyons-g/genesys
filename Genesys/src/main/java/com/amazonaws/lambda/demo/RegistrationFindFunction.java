@@ -18,41 +18,40 @@ import java.io.InputStreamReader;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 public class RegistrationFindFunction 
 extends CollegeS3Client
-implements RequestHandler<HttpQueryStringRequest, httpCourseResponse>  {
+implements RequestHandler<HttpRequest, httpCourseResponse>  {
 
-    @Override
-    public httpCourseResponse handleRequest(HttpQueryStringRequest request, Context context) {
-        context.getLogger().log("Input: " + request);
+	@Override
+	public httpCourseResponse handleRequest(HttpRequest request, Context context) {
+		context.getLogger().log("Input: " + request);
 
-        /*
-         * look up id of query parameter and get its value
-         * return numbers in string format
-         */
-        String idAsString = (String)request.getQueryStringParameters().get("id");
-        if(idAsString.equalsIgnoreCase("all")) {
-        	
-        	ArrayList<Course> allCourses = getAll().getCourses();
-        	httpCourseResponse response = new httpCourseResponse(allCourses);
-        	return response;
+		/*
+		 * look up id of query parameter and get its value
+		 * return numbers in string format
+		 */
+		Map<String, String> pathParams = request.getPathParameters();
+		if(pathParams == null) {
 	
-        	}
-        	
-        
-        Integer courseId = Integer.parseInt(idAsString);
-        Course course = getCourseById(courseId);
-        
-        return new httpCourseResponse(course);
-        
-    }
+			ArrayList<Course> allCourses = getAll().getCourses();
+			httpCourseResponse response = new httpCourseResponse(allCourses);
+			return response;
+
+		}
+		String idAsString = pathParams.get("id");
+		Integer courseId = Integer.parseInt(idAsString);
+		Course course = getCourseById(courseId);
+
+		return new httpCourseResponse(course);
+
+	}
 
 	private Course getCourseById(int courId) {
 
 		College college = getAll();
-		
+
 		for(Course cour: college.courses) {
 			if(cour.getCid()==courId) {
 				return cour;
@@ -60,6 +59,6 @@ implements RequestHandler<HttpQueryStringRequest, httpCourseResponse>  {
 		}
 		return null;
 	}
-    
+
 }
 

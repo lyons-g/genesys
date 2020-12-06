@@ -33,6 +33,7 @@ public class httpCourseResponse {
 		this.body = gson.toJson(course);
 	}
 	
+	
 	public String getBody() {
 		return body;
 	}

@@ -52,7 +52,7 @@ public class CollegeS3Client {
 		return new ArrayList<College>(Arrays.asList(getAll()));
 	}
 	
-	protected boolean updateAllCollege(College [] college) {
+	protected boolean updateAllCollege(College college) {
 		
 		Gson gson = new Gson();
 		String jsonString = gson.toJson(college);
@@ -69,8 +69,9 @@ public class CollegeS3Client {
 		return putResponse.sdkHttpResponse().isSuccessful();
 	}
 	
-	protected boolean updateAllCollege(List<College> collegeList) {
+	/*protected boolean updateAllCollege(List<College> collegeList) {
 		College [] college =  (College []) collegeList.toArray(new College[collegeList.size()]);
 		return updateAllCollege(college);
-	}
+		
+	}*/
 }

@@ -13,6 +13,10 @@ public class Student {
 	public Student () {
 		
 	}
+	public Student(int sid) {
+		this.sid=sid;
+		this.name=getName();
+	}
 	
 	public Student(int sid, String name) {
 		super();
