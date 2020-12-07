@@ -1,19 +1,17 @@
 package com.amazonaws.lambda.demo;
 
 import java.util.Map;
+
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+
 import java.util.ArrayList;
+import java.util.List;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
-import com.amazonaws.services.lambda.runtime.events.S3Event;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.amazonaws.services.s3.model.GetObjectRequest;
-import com.amazonaws.services.s3.model.S3Object;
-
-
-
-
 
 
 public class studentFindFunction 
@@ -23,31 +21,47 @@ implements RequestHandler<HttpRequest, httpStudentResponse> {
 	@Override
 	public httpStudentResponse handleRequest(HttpRequest request, Context context) {
 		context.getLogger().log("Input: " + request);
-		
+
 		Map<String, String> pathParams = request.getPathParameters();
 		if(pathParams == null) {
-			
-			ArrayList<Student> allStudents = getAll().getStudents();
-			httpStudentResponse response = new httpStudentResponse(allStudents);
-			return response;
-		}
-		String idAsString = pathParams.get("id");
-		Integer studentId = Integer.parseInt(idAsString);
-		Student student = getStudentById(studentId);
-		
-		return new httpStudentResponse(student);
-	}
-	
-	
-	private Student getStudentById(int stuId) {
-		College college = getAll();
-		
-		for(Student stu : college.students) {
-			if(stu.getSid()==stuId) {
-				return stu;
+
+			SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+			try (Session session = sessionFactory.openSession()) {
+				session.beginTransaction();
+
+				ArrayList<Student> allStudentsArray = new ArrayList<Student>();
+				List<Student> students = session.createQuery("from Student").getResultList();
+				for(Student student : students) {
+
+					allStudentsArray.add(student);
+
+				}
+				session.getTransaction().commit();
+
+				httpStudentResponse response = new httpStudentResponse(allStudentsArray);
+
+				return response;
 			}
 		}
-		
-		return null;
+
+		String idAsString = pathParams.get("id");
+		Integer studentId = Integer.parseInt(idAsString);
+	
+
+		SessionFactory sessionFactory2 = HibernateUtil.getSessionFactory();
+		try (Session session = sessionFactory2.openSession()) {
+			session.beginTransaction();
+
+			Student readStudent = new Student();
+					
+			session.get(Student.class, readStudent.getId(studentId));
+			session.getTransaction().commit();
+
+			return new httpStudentResponse(readStudent);
+
+
+		}
 	}
+
 }
+	

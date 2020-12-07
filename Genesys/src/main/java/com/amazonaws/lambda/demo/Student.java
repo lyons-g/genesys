@@ -1,35 +1,39 @@
 package com.amazonaws.lambda.demo;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.google.gson.annotations.SerializedName;
 
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "sid", scope = Student.class)
-public class Student {
+@Entity
+public class Student implements java.io.Serializable {
 	 
-	int sid;
-	String name;
+	private int id;
+	private String name;
 	
 	public Student () {
 		
 	}
-	public Student(int sid) {
-		this.sid=sid;
+	public Student(int id) {
+		this.id=id;
 		this.name=getName();
 	}
 	
-	public Student(int sid, String name) {
+	public Student(int id, String name) {
 		super();
-		this.sid = sid;
+		this.id = id;
 		this.name = name;
 	}
 
-	public int getSid() {
-		return sid;
+	@Id
+	public int getId() {
+		return id;
+	}
+	
+	public int getId(int id) {
+		return id;
 	}
 
-	public void setSid(int sid) {
-		this.sid = sid;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -42,7 +46,7 @@ public class Student {
 
 	@Override
 	public String toString() {
-		return "Student [sid=" + sid + ", name=" + name + "]";
+		return "Student [id=" + id + ", name=" + name + "]";
 	}
 	
 	
