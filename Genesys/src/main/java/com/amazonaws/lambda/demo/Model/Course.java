@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -20,10 +21,12 @@ public class Course {
 	int cid;
 	String title;
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name= "pid", referencedColumnName = "pid")
+	@JoinColumn(name= "professor", referencedColumnName = "pid")
 	Professor professor;
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	ArrayList<Student> students;
 
+	
 	public Course() {
 		
 	}
@@ -66,7 +69,7 @@ public class Course {
 	public void setProfessor(int pid) {
 		this.professor = new Professor(pid);
 	}
-
+		
 	public ArrayList<Student> getStudents() {
 		return students;
 	}
@@ -77,8 +80,8 @@ public class Course {
 
 	@Override
 	public String toString() {
-		return "Course [cid=" + cid + ", title=" + title + ", professor=" + professor + ", students=" + students
-				+ "]";
+		return "Course [cid=" + cid + ", title=" + title + ", professor=" + professor + ", students=" + students + "]";
 	}
+
 	
 }

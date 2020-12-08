@@ -26,11 +26,14 @@ public class CourseFindFunction implements RequestHandler<HttpRequest, httpCours
 		context.getLogger().log("Input: " + request);
 
 		Map<String, String> pathParams = request.getPathParameters();
-		if(pathParams == null) {
 
 			SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 			try (Session session = sessionFactory.openSession()) {
 				session.beginTransaction();
+				
+				if(pathParams == null) {
+				
+			
 
 				ArrayList<Course> allCourseArray = new ArrayList<Course>();
 				List<Course> courses = session.createQuery("from Course").getResultList();
@@ -45,19 +48,17 @@ public class CourseFindFunction implements RequestHandler<HttpRequest, httpCours
 
 				return response;
 			}
-		}
+		
 
 		String idAsString = pathParams.get("id");
-		Integer studentId = Integer.parseInt(idAsString);
+		Integer courseId = Integer.parseInt(idAsString);
 	
 
-		SessionFactory sessionFactory2 = HibernateUtil.getSessionFactory();
-		try (Session session = sessionFactory2.openSession()) {
-			session.beginTransaction();
+		
 
-			Course readCourse = new Course();
+			Course readCourse = session.get(Course.class, courseId);
 					
-			session.get(Course.class, readCourse.getId(studentId));
+			
 			session.getTransaction().commit();
 
 			return new httpCourseResponse(readCourse);

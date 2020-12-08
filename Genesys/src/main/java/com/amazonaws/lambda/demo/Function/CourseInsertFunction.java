@@ -4,8 +4,10 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import com.amazonaws.lambda.demo.HibernateUtil;
+import com.amazonaws.lambda.demo.Model.Course;
 import com.amazonaws.lambda.demo.Model.Student;
 import com.amazonaws.lambda.demo.http.HttpRequest;
+import com.amazonaws.lambda.demo.http.httpCourseResponse;
 import com.amazonaws.lambda.demo.http.httpStudentResponse;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
@@ -16,10 +18,10 @@ import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.google.gson.Gson;
 
-public class CourseInsertFunction implements RequestHandler<HttpRequest, httpStudentResponse> {
+public class CourseInsertFunction implements RequestHandler<HttpRequest, httpCourseResponse> {
 
     @Override
-    public httpStudentResponse handleRequest(HttpRequest request, Context context) {
+    public httpCourseResponse handleRequest(HttpRequest request, Context context) {
         context.getLogger().log("Input: " + request);
 
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
@@ -29,12 +31,12 @@ public class CourseInsertFunction implements RequestHandler<HttpRequest, httpStu
             String body = request.getBody();
             Gson gson = new Gson();
             
-            Student student = gson.fromJson(body, Student.class);
+            Course course= gson.fromJson(body, Course.class);
            
-            session.save(student);
+            session.save(course);
             session.getTransaction().commit();
         
-            httpStudentResponse response = new httpStudentResponse(student);
+            httpCourseResponse response = new httpCourseResponse(course);
             
             return response;
     }

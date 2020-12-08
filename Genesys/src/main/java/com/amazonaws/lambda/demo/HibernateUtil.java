@@ -6,6 +6,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
+import com.amazonaws.lambda.demo.Model.Course;
 import com.amazonaws.lambda.demo.Model.Professor;
 import com.amazonaws.lambda.demo.Model.Student;
 
@@ -31,6 +32,8 @@ public class HibernateUtil {
 
         configuration.addAnnotatedClass(Student.class);
         configuration.addAnnotatedClass(Professor.class);
+        configuration.addAnnotatedClass(Course.class);
+        
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
         try {
             sessionFactory = configuration.buildSessionFactory(serviceRegistry);
