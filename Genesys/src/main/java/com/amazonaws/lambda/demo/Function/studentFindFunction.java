@@ -69,4 +69,3 @@ implements RequestHandler<HttpRequest, httpStudentResponse> {
 	}
 
 }
-	

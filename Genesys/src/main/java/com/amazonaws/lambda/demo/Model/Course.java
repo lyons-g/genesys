@@ -2,21 +2,25 @@ package com.amazonaws.lambda.demo.Model;
 
 import java.util.ArrayList;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.google.gson.annotations.SerializedName;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "cid", scope = Course.class)
 
+@Entity
+@Table(name = "Course")
 public class Course {
 	
-	
+	@Id
+	@Column(name = "cid")
 	int cid;
 	String title;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name= "pid", referencedColumnName = "pid")
 	Professor professor;
 	ArrayList<Student> students;
 

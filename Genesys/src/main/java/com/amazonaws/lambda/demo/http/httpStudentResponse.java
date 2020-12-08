@@ -29,6 +29,7 @@ public class httpStudentResponse {
 		 */
 		public httpStudentResponse(ArrayList <Student> student) {
 			this();
+			System.out.println("EnteringStudentResponse");
 			Gson gson = new Gson();
 			this.body = gson.toJson(student);
 		}

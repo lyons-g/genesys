@@ -6,6 +6,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
+import com.amazonaws.lambda.demo.Model.Professor;
 import com.amazonaws.lambda.demo.Model.Student;
 
 public class HibernateUtil {
@@ -19,7 +20,7 @@ public class HibernateUtil {
         
         Configuration configuration = new Configuration();
         configuration.configure("hibernate.cfg.xml");
-    	System.out.println("Hibernate Configuration loaded");
+    	
 
         String jdbcUrl = System.getenv("DB_CONNECTION");
        
@@ -29,6 +30,7 @@ public class HibernateUtil {
         configuration.setProperty("hibernate.connection.password", System.getenv("AWS_PASSWORD"));
 
         configuration.addAnnotatedClass(Student.class);
+        configuration.addAnnotatedClass(Professor.class);
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
         try {
             sessionFactory = configuration.buildSessionFactory(serviceRegistry);

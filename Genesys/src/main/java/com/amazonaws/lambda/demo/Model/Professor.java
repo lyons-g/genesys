@@ -1,17 +1,23 @@
 package com.amazonaws.lambda.demo.Model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
 @Entity
-@Table(name="Professor")
+@Table(name = "Professor")
 public class Professor implements java.io.Serializable {
 	
-	
-	int pid;
-	String name;
+	@Id
+	@Column(name = "pid")
+	private int pid;
+	@Column(name = "name")
+	private String name;
+	@OneToOne(mappedBy = "professor")
+	private Course course;
 	
 	public Professor() {
 	}
@@ -27,7 +33,7 @@ public class Professor implements java.io.Serializable {
 		this.name = name;
 	}
 
-	@Id
+	
 	public int getPid() {
 		return pid;
 	}
@@ -46,6 +52,14 @@ public class Professor implements java.io.Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Course getCourse() {
+		return course;
+	}
+
+	public void setCourse(Course course) {
+		this.course = course;
 	}
 
 	@Override

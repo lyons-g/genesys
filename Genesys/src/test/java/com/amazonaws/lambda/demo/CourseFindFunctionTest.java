@@ -13,7 +13,7 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import com.amazonaws.lambda.demo.Function.CourseInsertFunction;
+import com.amazonaws.lambda.demo.Function.CourseFindFunction;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.events.S3Event;
 import com.amazonaws.services.s3.AmazonS3;
@@ -25,7 +25,7 @@ import com.amazonaws.services.s3.model.S3Object;
  * A simple test harness for locally invoking your Lambda function handler.
  */
 @RunWith(MockitoJUnitRunner.class)
-public class CourseInsertFunctionTest {
+public class CourseFindFunctionTest {
 
     private final String CONTENT_TYPE = "image/jpeg";
     private S3Event event;
@@ -59,8 +59,8 @@ public class CourseInsertFunctionTest {
     }
 
     @Test
-    public void testCourseInsertFunction() {
-        CourseInsertFunction handler = new CourseInsertFunction(s3Client);
+    public void testCourseFindFunction() {
+        CourseFindFunction handler = new CourseFindFunction(s3Client);
         Context ctx = createContext();
 
         String output = handler.handleRequest(event, ctx);

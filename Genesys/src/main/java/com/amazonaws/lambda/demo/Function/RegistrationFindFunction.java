@@ -47,13 +47,19 @@ implements RequestHandler<HttpRequest, httpCourseResponse>  {
 		}
 		String idAsString = pathParams.get("id");
 		Integer courseId = Integer.parseInt(idAsString);
-		Course course = getCourseById(courseId);
+		//Course course = getCourseById(courseId);
 
-		return new httpCourseResponse(course);
+		return new httpCourseResponse();
 
 	}
 
-	private Course getCourseById(int courId) {
+	
+}
+
+
+
+
+/*	private Course getCourseById(int courId) {
 
 		College college = getAll();
 
@@ -66,4 +72,4 @@ implements RequestHandler<HttpRequest, httpCourseResponse>  {
 	}
 
 }
-
+*/
