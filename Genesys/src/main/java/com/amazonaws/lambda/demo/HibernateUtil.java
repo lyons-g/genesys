@@ -19,12 +19,12 @@ public class HibernateUtil {
         configuration.configure("hibernate.cfg.xml");
     	System.out.println("Hibernate Configuration loaded");
 
-        String jdbcUrl = "jdbc:mysql://mysql-college.czydwjbzlv6k.eu-west-1.rds.amazonaws.com:3306/mysqlCollege";
+        String jdbcUrl = System.getenv("DB_CONNECTION");
        
         
         configuration.setProperty("hibernate.connection.url", jdbcUrl);
-        configuration.setProperty("hibernate.connection.username", "admin");
-        configuration.setProperty("hibernate.connection.password", "fees3heap");
+        configuration.setProperty("hibernate.connection.username", System.getenv("AWS_USER"));
+        configuration.setProperty("hibernate.connection.password", System.getenv("AWS_PASSWORD"));
 
         configuration.addAnnotatedClass(Student.class);
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
