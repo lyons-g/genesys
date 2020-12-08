@@ -28,11 +28,13 @@ implements RequestHandler<HttpRequest, httpStudentResponse> {
 		context.getLogger().log("Input: " + request);
 
 		Map<String, String> pathParams = request.getPathParameters();
-		if(pathParams == null) {
-
+					
 			SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+			
+			
 			try (Session session = sessionFactory.openSession()) {
 				session.beginTransaction();
+				if(pathParams == null) {
 
 				ArrayList<Student> allStudentsArray = new ArrayList<Student>();
 				List<Student> students = session.createQuery("from Student").getResultList();
@@ -47,19 +49,14 @@ implements RequestHandler<HttpRequest, httpStudentResponse> {
 
 				return response;
 			}
-		}
+		
 
 		String idAsString = pathParams.get("id");
 		Integer studentId = Integer.parseInt(idAsString);
 	
 
-		SessionFactory sessionFactory2 = HibernateUtil.getSessionFactory();
-		try (Session session = sessionFactory2.openSession()) {
-			session.beginTransaction();
-
-			Student readStudent = new Student();
+			Student readStudent = session.get(Student.class, studentId);
 					
-			session.get(Student.class, readStudent.getId(studentId));
 			session.getTransaction().commit();
 
 			return new httpStudentResponse(readStudent);
@@ -67,5 +64,4 @@ implements RequestHandler<HttpRequest, httpStudentResponse> {
 
 		}
 	}
-
-}
+	}

@@ -26,12 +26,12 @@ implements RequestHandler<HttpRequest, httpProfessorResponse> {
 		context.getLogger().log("Input: " + request);
 		
 		Map<String, String> pathParams = request.getPathParameters();
-		if(pathParams == null) {
-
+		
 			SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 			try (Session session = sessionFactory.openSession()) {
 				session.beginTransaction();
-
+				
+				if(pathParams == null) {
 				ArrayList<Professor> allProfessorArray = new ArrayList<Professor>();
 				List<Professor> professors = session.createQuery("from Professor").getResultList();
 				for(Professor professor : professors) {
@@ -45,17 +45,12 @@ implements RequestHandler<HttpRequest, httpProfessorResponse> {
 
 				return response;
 			}
-	}
 	
 		String idAsString = pathParams.get("id");
 		Integer profId = Integer.parseInt(idAsString);
 	
 
-		SessionFactory sessionFactory2 = HibernateUtil.getSessionFactory();
-		try (Session session = sessionFactory2.openSession()) {
-			session.beginTransaction();
-
-			Professor readProf = new Professor();
+			Professor readProf = session.get(Professor.class, profId);
 					
 			session.get(Professor.class, readProf.getPid(profId));
 			session.getTransaction().commit();

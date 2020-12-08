@@ -16,8 +16,7 @@ public class Professor implements java.io.Serializable {
 	private int pid;
 	@Column(name = "name")
 	private String name;
-	@OneToOne(mappedBy = "professor")
-	private Course course;
+
 	
 	public Professor() {
 	}
@@ -54,13 +53,6 @@ public class Professor implements java.io.Serializable {
 		this.name = name;
 	}
 
-	public Course getCourse() {
-		return course;
-	}
-
-	public void setCourse(Course course) {
-		this.course = course;
-	}
 
 	@Override
 	public String toString() {

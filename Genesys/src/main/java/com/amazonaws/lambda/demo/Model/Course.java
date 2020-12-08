@@ -37,17 +37,6 @@ public class Course {
 	}
 
 	
-	public Course(CourseJson courseToAdd) {
-		this.cid = courseToAdd.getCid();
-		this.title = courseToAdd.getTitle();
-		this.professor = new Professor(courseToAdd.getPid());
-		
-		ArrayList<Student> students = new ArrayList<Student>();
-		for(int sid : courseToAdd.getSids()) {
-			students.add(new Student(sid));
-		}
-		this.students = students;
-	}
 
 	public int getCid() {
 		return cid;
