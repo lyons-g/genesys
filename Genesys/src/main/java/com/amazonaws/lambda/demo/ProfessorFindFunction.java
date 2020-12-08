@@ -1,7 +1,11 @@
 package com.amazonaws.lambda.demo;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
@@ -15,31 +19,43 @@ implements RequestHandler<HttpRequest, httpProfessorResponse> {
 		
 		Map<String, String> pathParams = request.getPathParameters();
 		if(pathParams == null) {
-			
-			ArrayList<Professor> allProfessors = getAll().getProfessors();
-			httpProfessorResponse response = new httpProfessorResponse(allProfessors);
-			return response;
-		}
-		String idAsString = pathParams.get("id");
-		Integer professorId = Integer.parseInt(idAsString);
-		Professor professor = getProfessorById(professorId);
-		
-		return new httpProfessorResponse(professor);
-	}
-	
-	
-	private Professor getProfessorById(int profId) {
-		College college = getAll();
-		
-		for(Professor prof : college.professors) {
-			if(prof.getPid()==profId) {
-				return prof;
+
+			SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+			try (Session session = sessionFactory.openSession()) {
+				session.beginTransaction();
+
+				ArrayList<Professor> allProfessorArray = new ArrayList<Professor>();
+				List<Professor> professors = session.createQuery("from Professor").getResultList();
+				for(Professor prof : professors) {
+
+					allProfessorArray.add(prof);
+
+				}
+				session.getTransaction().commit();
+
+				httpProfessorResponse response = new httpProfessorResponse(allProfessorArray);
+
+				return response;
 			}
+	}
+	
+		String idAsString = pathParams.get("id");
+		Integer profId = Integer.parseInt(idAsString);
+	
+
+		SessionFactory sessionFactory2 = HibernateUtil.getSessionFactory();
+		try (Session session = sessionFactory2.openSession()) {
+			session.beginTransaction();
+
+			Professor readProf = new Professor();
+					
+			session.get(Professor.class, readProf.getPid(profId));
+			session.getTransaction().commit();
+
+			return new httpProfessorResponse(readProf);
+
+
 		}
-		
-		return null;
 	}
 
-    }
-
-
+}

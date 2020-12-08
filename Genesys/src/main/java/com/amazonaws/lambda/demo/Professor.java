@@ -1,11 +1,13 @@
 package com.amazonaws.lambda.demo;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.google.gson.annotations.SerializedName;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "pid", scope = Professor.class)
-public class Professor {
+
+@Entity
+@Table(name="Professor")
+public class Professor implements java.io.Serializable {
 	
 	
 	int pid;
@@ -25,7 +27,12 @@ public class Professor {
 		this.name = name;
 	}
 
+	@Id
 	public int getPid() {
+		return pid;
+	}
+	
+	public int getPid(int id) {
 		return pid;
 	}
 
