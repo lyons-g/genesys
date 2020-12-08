@@ -1,5 +1,10 @@
-package com.amazonaws.lambda.demo;
+package com.amazonaws.lambda.demo.Function;
 
+import com.amazonaws.lambda.demo.CollegeS3Client;
+import com.amazonaws.lambda.demo.Model.College;
+import com.amazonaws.lambda.demo.Model.Professor;
+import com.amazonaws.lambda.demo.http.HttpRequest;
+import com.amazonaws.lambda.demo.http.httpProfessorResponse;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.google.gson.Gson;

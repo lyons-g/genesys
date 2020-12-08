@@ -1,4 +1,4 @@
-package com.amazonaws.lambda.demo;
+package com.amazonaws.lambda.demo.Function;
 
 import java.util.Map;
 
@@ -10,6 +10,11 @@ import org.hibernate.Transaction;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.amazonaws.lambda.demo.CollegeS3Client;
+import com.amazonaws.lambda.demo.HibernateUtil;
+import com.amazonaws.lambda.demo.Model.Student;
+import com.amazonaws.lambda.demo.http.HttpRequest;
+import com.amazonaws.lambda.demo.http.httpStudentResponse;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 

@@ -1,8 +1,14 @@
-package com.amazonaws.lambda.demo;
+package com.amazonaws.lambda.demo.Function;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.amazonaws.lambda.demo.CollegeS3Client;
+import com.amazonaws.lambda.demo.Model.College;
+import com.amazonaws.lambda.demo.Model.Course;
+import com.amazonaws.lambda.demo.Model.CourseJson;
+import com.amazonaws.lambda.demo.http.HttpRequest;
+import com.amazonaws.lambda.demo.http.httpCourseResponse;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.google.gson.Gson;

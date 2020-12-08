@@ -1,8 +1,11 @@
-package com.amazonaws.lambda.demo;
+package com.amazonaws.lambda.demo.Function;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import com.amazonaws.lambda.demo.HibernateUtil;
+import com.amazonaws.lambda.demo.Model.Request;
+import com.amazonaws.lambda.demo.Model.Student;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 

@@ -1,4 +1,4 @@
-package com.amazonaws.lambda.demo;
+package com.amazonaws.lambda.demo.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

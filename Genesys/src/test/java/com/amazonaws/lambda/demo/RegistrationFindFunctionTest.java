@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.amazonaws.lambda.demo.Function.RegistrationFindFunction;
 import com.amazonaws.services.lambda.runtime.Context;
 
 /**

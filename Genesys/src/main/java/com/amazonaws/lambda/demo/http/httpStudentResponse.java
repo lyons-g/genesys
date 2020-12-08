@@ -1,9 +1,10 @@
-package com.amazonaws.lambda.demo;
+package com.amazonaws.lambda.demo.http;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.amazonaws.lambda.demo.Model.Student;
 import com.google.gson.Gson;
 
 public class httpStudentResponse {
